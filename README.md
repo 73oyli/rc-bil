@@ -1,6 +1,9 @@
 # RC-bil – 4WD FPV-prosjekt
 
 ![Bygg CAD-artefakter](https://github.com/73oyli/rc-bil/actions/workflows/build-cad.yml/badge.svg)
+[![Siste release](https://img.shields.io/github/v/release/73oyli/rc-bil)](https://github.com/73oyli/rc-bil/releases/latest)
+
+📦 **[Last ned siste release](https://github.com/73oyli/rc-bil/releases/latest)** – ZIP med alle STL-filer + tegningspakke (PDF).
 
 Alt for RC-bilen, sortert etter filtype.
 
