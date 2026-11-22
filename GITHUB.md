@@ -46,3 +46,19 @@ git push -u origin main
 
 - Legg gjerne inn en beskrivelse på GitHub: «4WD FPV RC-bil – 3D-printbart chassis, ArduPilot Rover, ELRS»
 - Bilder fra bygging legges i `bilder-bygg/` og pushes med vanlig `git add/commit/push`
+## Automatisk regenerering (GitHub Actions)
+
+Workflowen [.github/workflows/build-cad.yml](.github/workflows/build-cad.yml) kjører ved push som endrer:
+
+- `scad/**.scad`
+- `python/**.py`
+- selve workflow-filen
+
+Den installerer OpenSCAD + Pillow på Ubuntu, regenererer:
+
+- `pdf/bil-tegninger.pdf` og `png/pdf-p*.png` (via `python/draw-pdf.py`)
+- `stl/*.stl` og `notater/print-estimater.md` (via `python/stl-estimater.py`)
+
+og committer resultatet automatisk med `github-actions[bot]`.
+
+**Merk:** PDF-en genereres med DejaVu-font på Linux, så den kan se litt annerledes ut enn den lokale Windows-versjonen (Segoe UI). Alt annet er identisk.
