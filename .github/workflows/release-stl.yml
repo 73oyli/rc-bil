@@ -1,0 +1,44 @@
+name: Utgivelse (STL + PDF)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut repo
+        uses: actions/checkout@v4
+
+      - name: Lag ZIP med alle STL-filer
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          mkdir -p dist
+          zip -r "dist/rc-bil-stl-${TAG}.zip" stl/ -x '*.DS_Store'
+          if [ -f pdf/bil-tegninger.pdf ]; then
+            zip -j "dist/rc-bil-stl-${TAG}.zip" pdf/bil-tegninger.pdf
+          fi
+          ls -lh dist/
+
+      - name: Opprett GitHub Release med vedlegg
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          gh release create "$TAG" "dist/rc-bil-stl-${TAG}.zip" \
+            --title "RC-bil ${TAG}" \
+            --notes "3D-printbare STL-filer og tegningspakke (PDF) for RC-bil ${TAG}.
+
+          Inneholder:
+          - alle STL-filer (chassis, armer, spindler, nav, dekk, gimbal, testplate)
+          - bil-tegninger.pdf (10 sider: oversikt, hjuloppheng, styring, gimbal, kobling, printestimater)" \
+            --generate-notes

@@ -2,6 +2,8 @@ name: Bygg CAD-artefakter
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'scad/**.scad'
       - 'python/**.py'
