@@ -1,0 +1,32 @@
+# ArduPilot Rover – Ackermann (styring + 4WD), 6S begrenset
+# Last inn i Mission Planner -> Config -> Full Parameter List -> Load
+# MERK: startpunkt - verifiser hver verdi.
+
+FRAME_CLASS,1
+SERVO1_FUNCTION,26
+SERVO3_FUNCTION,70
+MOT_PWM_TYPE,0
+
+# 6S-begrensning
+MOT_THR_MAX,60
+MOT_SLEW_UP,0.5
+MOT_SLEW_DN,0.5
+
+# Fart og sving
+CRUISE_SPEED,3
+CRUISE_THROTTLE,30
+TURN_RADIUS,1.2
+ATC_STR_RAT_MAX,90
+ATC_STR_ACC_MAX,120
+
+# Sikkerhet
+BRD_SAFETY_DEFLT,0
+ARMING_CHECK,1
+FS_THR_ENABLE,1
+FS_THR_VALUE,975
+FS_ACTION,2
+FS_TIMEOUT,1.5
+
+# Batteri (2x 6500 = 13000 mAh)
+BATT_MONITOR,4
+BATT_CAPACITY,13000
