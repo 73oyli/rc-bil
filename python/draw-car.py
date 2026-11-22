@@ -3,8 +3,16 @@ from PIL import Image, ImageDraw, ImageFont
 import math, os
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "png")
-FONT_R = "C:/Windows/Fonts/segoeui.ttf"
-FONT_B = "C:/Windows/Fonts/segoeuib.ttf"
+def _font_path(cands):
+    for p in cands:
+        if os.path.exists(p):
+            return p
+    return None
+
+FONT_R = _font_path(["C:/Windows/Fonts/segoeui.ttf",
+                     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"])
+FONT_B = _font_path(["C:/Windows/Fonts/segoeuib.ttf",
+                     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"])
 
 def f(size, bold=False):
     try:

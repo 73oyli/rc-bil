@@ -1,0 +1,50 @@
+name: Bygg CAD-artefakter
+
+on:
+  push:
+    paths:
+      - 'scad/**.scad'
+      - 'python/**.py'
+      - '.github/workflows/build-cad.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-cad-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut repo
+        uses: actions/checkout@v4
+
+      - name: Installer OpenSCAD og Python-avhengigheter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pillow
+
+      - name: Regenerer PDF og PNG
+        run: python3 python/draw-pdf.py
+
+      - name: Regenerer STL og printestimater
+        env:
+          OPENSCAD_BIN: openscad
+        run: python3 python/stl-estimater.py
+
+      - name: Commit og push endringer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Ingen endringer aa committe."
+          else
+            git commit -m "Auto: regenerer PDF/PNG/STL fra SCAD"
+            git push
+          fi

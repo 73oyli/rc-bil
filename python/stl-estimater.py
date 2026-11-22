@@ -4,7 +4,7 @@ Kjor: python stl-estimater.py
 import os, struct, subprocess, io
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCAD = "C:/Program Files/OpenSCAD/openscad.exe"
+SCAD = os.environ.get("OPENSCAD_BIN") or ("C:/Program Files/OpenSCAD/openscad.exe" if os.name == "nt" else "openscad")
 STL = os.path.join(HERE, "..", "stl")
 os.makedirs(STL, exist_ok=True)
 
