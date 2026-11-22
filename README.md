@@ -1,5 +1,7 @@
 # RC-bil – 4WD FPV-prosjekt
 
+![Bygg CAD-artefakter](https://github.com/73oyli/rc-bil/actions/workflows/build-cad.yml/badge.svg)
+
 Alt for RC-bilen, sortert etter filtype.
 
 | Mappe | Innhold |
